@@ -245,6 +245,22 @@
 		std::string nextblockhash;
 	};
 
+	struct blockheader_t {
+		std::string hash;
+		int confirmations;
+		int height;
+		int version;
+		std::string versionHex;
+		std::string merkleroot;
+		int mediantime;
+		unsigned int nonce;
+		std::string bits;
+		double difficulty;
+		std::string chainwork;
+		std::string previousblockhash;
+		std::string nextblockhash;
+	};
+
 	struct mininginfo_t{
 		int blocks;
 		int currentblocksize;

@@ -122,6 +122,10 @@ public:
     blockinfo_t getblock(const std::string& blockhash);
     int getblockcount();
 
+    /* === blockchain === */
+    blockheader_t getblockheaderjson(const std::string& blockhash);
+    std::string getblockheaderhex(const std::string& blockhash);
+
     void setgenerate(bool generate, int genproclimit = -1);
     bool getgenerate();
     double getdifficulty();

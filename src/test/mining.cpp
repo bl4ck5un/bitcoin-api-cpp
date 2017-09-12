@@ -1,7 +1,10 @@
 #define BOOST_TEST_DYN_LINK
 
-#include <boost/test/unit_test.hpp>
+
 #include <algorithm>
+#include <iostream>
+#include <boost/test/unit_test.hpp>
+
 #include "main.cpp"
 
 BOOST_AUTO_TEST_SUITE(MiningTests)
@@ -78,6 +81,42 @@ BOOST_AUTO_TEST_CASE(GetBlock) {
 	std::cout << "previousblockhash: " << response.previousblockhash << std::endl;
 	std::cout << "nextblockhash: " << response.nextblockhash << std::endl << std::endl;
 	#endif
+}
+
+BOOST_AUTO_TEST_CASE(GetBlockHeaderHex) {
+
+	MyFixture fx;
+	std::string response;
+
+	NO_THROW(response = fx.btc.getblockheaderhex("00000000839a8e6886ab5951d76f411475428afc90947ee320161bbf18eb6048"));
+	BOOST_REQUIRE(response == "010000006fe28c0ab6f1b372c1a6a246ae63f74f931e8365e15a089c68d6190000000000982051fd1e4ba744bbbe680e1fee14677ba1a3c3540bf7b1cdb606e857233e0e61bc6649ffff001d01e36299");
+
+}
+
+BOOST_AUTO_TEST_CASE(GetBlockHeaderJSON) {
+
+	MyFixture fx;
+	blockheader_t response;
+
+	NO_THROW(response = fx.btc.getblockheaderjson("00000000839a8e6886ab5951d76f411475428afc90947ee320161bbf18eb6048"));
+	BOOST_REQUIRE(response.height == 1);
+
+#ifdef VERBOSE
+	std::cout << "=== getblock (10th block) ===" << std::endl;
+	std::cout << "hash: " << response.hash << std::endl;
+	std::cout << "confirmations: " << response.confirmations << std::endl;
+	std::cout << "height: " << response.height << std::endl;
+	std::cout << "version: " << response.version << std::endl;
+	std::cout << "versionHex: " << response.versionHex << std::endl;
+	std::cout << "merkleroot: " << response.merkleroot << std::endl;
+	std::cout << "mediantime: " << response.mediantime << std::endl;
+	std::cout << "nonce: " << response.nonce << std::endl;
+	std::cout << "bits: " << response.bits << std::endl;
+	std::cout << "difficulty: " << response.difficulty << std::endl;
+	std::cout << "chainwork: " << response.chainwork << std::endl;
+	std::cout << "previousblockhash: " << response.previousblockhash << std::endl;
+	std::cout << "nextblockhash: " << response.nextblockhash << std::endl << std::endl;
+#endif
 }
 
 BOOST_AUTO_TEST_CASE(GetGenerate) {

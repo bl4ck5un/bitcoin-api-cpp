@@ -941,6 +941,42 @@ int BitcoinAPI::getblockcount() {
 	return result.asInt();
 }
 
+std::string BitcoinAPI::getblockheaderhex(const std::string& blockhash) {
+	string command = "getblockheader";
+	Value params, result;
+	params.append(blockhash);
+	params.append(false);
+
+    result = sendcommand(command, params);
+	return result.asString();
+}
+
+blockheader_t BitcoinAPI::getblockheaderjson(const std::string& blockhash) {
+	string command = "getblockheader";
+	Value params, result;
+	blockheader_t ret;
+
+	params.append(blockhash);
+	result = sendcommand(command, params);
+
+	ret.hash = result["hash"].asString();
+	ret.confirmations = result["confirmations"].asInt();
+	ret.height = result["height"].asInt();
+	ret.version = result["version"].asInt();
+	ret.versionHex = result["verionHex"].asString();
+	ret.merkleroot = result["merkleroot"].asString();
+	ret.mediantime = result["mediantime"].asUInt();
+	ret.nonce = result["nonce"].asUInt();
+	ret.bits = result["bits"].asString();
+	ret.difficulty = result["difficulty"].asDouble();
+	ret.chainwork = result["chainwork"].asString();
+	ret.previousblockhash = result["previousblockhash"].asString();
+	ret.nextblockhash = result["nextblockhash"].asString();
+
+	return ret;
+}
+
+
 void BitcoinAPI::setgenerate(bool generate, int genproclimit) {
 	string command = "setgenerate";
 	Value params;
